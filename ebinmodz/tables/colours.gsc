@@ -14,12 +14,11 @@ getRGB(colour_code) {
 }
 
 getCode(rgb) {
-	switch(rgb) {
-		case (0.94, 0.30, 0.27): return 1; //red
-		case (0.50, 0.71, 0.00): return 2; //green
-		case (0.13, 0.74, 0.95): return 5; //cyan/blue
-		default: return 7; //white
-	}
+	//cannot use tuples in switch
+	if(rgb == (0.94, 0.30, 0.27)) return 1; //red
+	if(rgb == (0.50, 0.71, 0.00)) return 2; //green
+	if(rgb == (0.13, 0.74, 0.95)) return 5; //cyan/blue
+	return 7; //white
 }
 
 //TEST
