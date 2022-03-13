@@ -34,8 +34,8 @@ waitForCompletion(event, occurrences, min_delay) {
 	percent_increase = 1 / occurrences;
 	if(!isDefined(min_delay)) min_delay = 0;
 
-	while(self.challenge_progress < 1.0) {
-		self.owner waittill(event); //happens when a reload is complete - must be built-in
+	while(self.progress < 1.0) {
+		self.owner waittill(event); //happens when an [event] is complete - this event must be built-in to the game
 		self increaseProgress(percent_increase);
 		wait min_delay;
 	}

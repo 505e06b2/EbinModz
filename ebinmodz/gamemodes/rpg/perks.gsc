@@ -7,6 +7,7 @@ new(name) {
 	ret.owner = self;
 	ret.name = name;
 	ret.challenge = ebinmodz\gamemodes\rpg\challenges::new();
+	ret.challenge.perk = ret;
 
 	switch(name) {
 		case "Sleight of Hand":
@@ -58,8 +59,10 @@ _challengeComplete() {
 	self.owner iPrintLnBold(self.name + " Pro!");
 	self.pro = true;
 	self.origin = (0,0,0);
-	if(isAlive(self.owner)) self.owner maps\mp\perks\_perks::givePerk(self.pro_name); //already alive in pvp, so the normal scripts won't activate yet
-	self.owner openMenu("perk_display");
+	if(isAlive(self.owner)) {
+		self.owner maps\mp\perks\_perks::givePerk(self.pro_name); //already alive in pvp, so the normal scripts won't activate yet
+		self.owner openMenu("perk_display");
+	}
 }
 
 //self should be the struct that is holding this
@@ -68,7 +71,7 @@ _challengeSleightOfHand() {
 	self.name = "Sleight of Hand Pro";
 	self.requirement = "Reload " + times + " times";
 	self ebinmodz\gamemodes\rpg\challenges::waitForCompletion("reload", times); //built-in - after reload successful
-	_challengeComplete();
+	self.perk _challengeComplete();
 }
 
 _challengeStoppingPower() {
@@ -76,14 +79,14 @@ _challengeStoppingPower() {
 	self.name = "Stopping Power Pro";
 	self.requirement = "Shoot " + times + " times";
 	self ebinmodz\gamemodes\rpg\challenges::waitForCompletion("weapon_fired", times); //built-in
-	_challengeComplete();
+	self.perk _challengeComplete();
 }
 
 _challengeCommando() {
 	times = 150;
 	self.name = "Commando Pro";
 	self.requirement = "Melee " + times + " times";
-	self ebinmodz\gamemodes\rpg\challenges::waitForCompletion("+melee", times, 1); //in main
-	_challengeComplete();
+	self ebinmodz\gamemodes\rpg\challenges::waitForCompletion("+melee", times, 1); //event created in main.gsc
+	self.perk _challengeComplete();
 	//_challengeEventThink("fall_damaged", times); //check main::calculateDamage
 }
