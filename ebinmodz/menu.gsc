@@ -72,7 +72,7 @@ dontDie() {
 checkLaptop(laptop) {
 	self endon("disconnect");
 
-	while(self.menu.open && self.menu.access_level && self getCurrentWeapon() == laptop) {
+	while(self.menu.open && self.menu.access_level != "" && self getCurrentWeapon() == laptop) {
 		wait 0.2;
 	}
 
