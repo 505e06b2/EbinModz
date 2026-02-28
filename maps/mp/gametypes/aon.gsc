@@ -8,10 +8,16 @@ needMap() {
 	return getdvar("mapname");
 }
 
-main() {
-	if(getdvar("mapname") == "mp_background") return;
+baseGametype() {
+	return "dm";
+}
 
-	maps\mp\gametypes\dm::main();
+main() {
+	if(getDvarInt("dedicated") > 0) {
+		if(getdvar("mapname") == "mp_background") return;
+
+		maps\mp\gametypes\dm::main();
+	}
 
 	//set up menu
 	level ebinmodz\main::init();

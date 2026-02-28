@@ -4,6 +4,10 @@ needMap() {
 	return ebinmodz\gamemodes\rpg\main::needMap();
 }
 
+baseGametype() {
+	return "dm";
+}
+
 main() {
 	return ebinmodz\gamemodes\rpg\main::main();
 }

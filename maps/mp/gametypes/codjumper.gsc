@@ -8,6 +8,10 @@ needMap() {
 	return getdvar("mapname");
 }
 
+baseGametype() {
+	return "dm";
+}
+
 saveLocation() {
 	self.saved_location = spawnStruct();
 	self.saved_location.position = self getOrigin();
@@ -37,9 +41,11 @@ clearLocation() {
 }
 
 main() {
-	if(getdvar("mapname") == "mp_background") return;
+	if(getDvarInt("dedicated") > 0) {
+		if(getdvar("mapname") == "mp_background") return;
 
-	maps\mp\gametypes\dm::main();
+		maps\mp\gametypes\dm::main();
+	}
 
 	//set up menu
 	level ebinmodz\main::init();

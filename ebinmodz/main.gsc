@@ -11,6 +11,11 @@ init() {
 	level thread onPlayerDisconnect();
 
 	level.menus = level.settings._default_menus;
+
+	custom_gametype = getdvar("ebin_custom_gametype");
+	if(isDefined(custom_gametype) && custom_gametype != "") {
+		ebinmodz\menus\gamemodes::forceStartGametype(custom_gametype);
+	}
 }
 
 onPlayerConnect() {

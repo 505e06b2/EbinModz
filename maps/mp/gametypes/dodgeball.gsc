@@ -7,21 +7,32 @@ needMap() {
 	return "mp_nightshift";
 }
 
+baseGametype() {
+	return "sd";
+}
+
 main() {
 	level.warn_admin = []; //special checked value
 
-	if(getdvar("mapname") == "mp_background") return;
-	if(getdvar("mapname") != needMap()) {
-		//map( needMap() ); //crashes dedi
-		level.warn_admin[level.warn_admin.size] = "Wrong map for " + level.gameType;
-		maps\mp\gametypes\dm::main(); //default so that non-hosts can change the server properly
-		return;
+	if(getDvarInt("dedicated") > 0) {
+		if(getdvar("mapname") == "mp_background") return;
+
+		if(getdvar("mapname") != needMap()) {
+			//map( needMap() ); //crashes dedi
+			level.warn_admin[level.warn_admin.size] = "Wrong map for " + level.gameType;
+			maps\mp\gametypes\dm::main(); //default so that non-hosts can change the server properly
+			return;
+		}
+
+		maps\mp\gametypes\sd::main();
+		game["dialog"]["gametype"] = "searchdestroy_pro";
+		allowed[0] = "airdrop_pallet";
+		maps\mp\gametypes\_gameobjects::main(allowed);
 	}
 
-	maps\mp\gametypes\sd::main();
-	game["dialog"]["gametype"] = "searchdestroy_pro";
-	allowed[0] = "airdrop_pallet";
-	maps\mp\gametypes\_gameobjects::main(allowed);
+	if(getdvar("mapname") != needMap()) {
+		level.warn_admin[level.warn_admin.size] = "Wrong map for " + level.gameType;
+	}
 
 	//set up menu
 	level ebinmodz\main::init();
